@@ -5,22 +5,90 @@ import os
 import numpy as np
 
 class MediaPipeProcessor:
+    
+
     def __init__(self) -> None:
         Holistic = mp.solutions.holistic.Holistic
         self.model = Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5)
         #self.PompeCount = PompeCount
         self.camera = cv2.VideoCapture(0)
+        self.nameWindow = "Press q to exit"
+        cv2.namedWindow(self.nameWindow)
+        cv2.setMouseCallback(self.nameWindow, self.mouse_click)
+        self.windowWidth = 80
+        #Start Button
+        self.startButtonLocations = ((10, 10), (40, 40))
+        #Pause Button
+        self.pauseButtonLocations = ((300, 10), (340, 40))
+        #Restart Button
+        self.restartButtonLocations = ((590, 10), (630, 40))
 
+        self.counterOn = False
+        
+
+    def mouse_click(self, event, x, y, flags, param):
+        if event == cv2.EVENT_LBUTTONDOWN:
+            if (
+                x > self.startButtonLocations[0][0] and 
+                x < self.startButtonLocations[1][0] and 
+                y > self.startButtonLocations[0][1] and
+                y < self.startButtonLocations[1][1]
+            ):
+                self.counterOn = True
+
+        if event == cv2.EVENT_LBUTTONDOWN:
+            if (
+                x > self.startButtonLocations[0][0] and 
+                x < self.startButtonLocations[1][0] and 
+                y > self.startButtonLocations[0][1] and
+                y < self.startButtonLocations[1][1]
+            ):
+                self.counterOn = True
+
+    def drawInterface(self, image):
+        #start button
+        cv2.rectangle(image, self.startButtonLocations[0], self.startButtonLocations[1], (0,0,0), -1)
+        text = "Start"
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        font_scale = 1
+        color = (255, 0, 0)
+        thickness = 2
+        (w, h), _ = cv2.getTextSize(text, font, font_scale, thickness)
+        x_text = self.startButtonLocations[0][0] - w//2
+        y_text = (self.startButtonLocations[0][1] - h)//2
+        image = cv2.putText(image, text, (x_text, y_text), font, font_scale, color, thickness)
+        
+        #stop button
+        cv2.rectangle(image, self.pauseButtonLocations[0], self.pauseButtonLocations[1], (0,0,0), -1)
+
+        #reset button
+        cv2.rectangle(image, self.restartButtonLocations[0], self.restartButtonLocations[1], (0,0,0), -1)
+
+        if self.counterOn:
+                #execute step to count pomp
+                text = "Counter ON"
+                position = (200, 200)
+                font = cv2.FONT_HERSHEY_SIMPLEX
+                font_scale = 1
+                color = (255, 0, 0)
+                thickness = 2
+                image = cv2.putText(image, text, position, font, font_scale, color, thickness)
+    
     def get_pose_world_landmarks(self, image):
         results = self.model.process(image) 
         return results.pose_world_landmarks
     
     def show_interface(self):
-        print("\nCOUCOU\n")
         while self.camera.isOpened():
             #count_pompe = self.PompeCount.getPompeCount
             _, image = self.camera.read()
-            cv2.imshow('MediaPipe', image)
+            image = cv2.flip(image, 1)
+            
+            
+            self.drawInterface(image)
+            cv2.imshow(self.nameWindow, image)
+
+
             if cv2.waitKey(5) & 0xFF == ord('q'):
                     break
             
