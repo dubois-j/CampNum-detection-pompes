@@ -1,0 +1,26 @@
+../data/img/bas/captured_10003.png_elisee.png
+'NoneType' object has no attribute 'landmark'
+../data/img/bas/captured_10001.png_elisee.png
+'NoneType' object has no attribute 'landmark'
+../data/img/bas/captured_10004.png_elisee.png
+'NoneType' object has no attribute 'landmark'
+../data/img/bas/captured_61.png
+'NoneType' object has no attribute 'landmark'
+../data/img/bas/captured_38.png
+'NoneType' object has no attribute 'landmark'
+../data/img/bas/down_0019_20251216_110706_144126.jpg
+'NoneType' object has no attribute 'landmark'
+../data/img/bas/captured_27.png
+'NoneType' object has no attribute 'landmark'
+../data/img/bas/captured_19.png_elisee.png
+'NoneType' object has no attribute 'landmark'
+../data/img/bas/captured_image_14.png_marie.png
+'NoneType' object has no attribute 'landmark'
+../data/img/bas/captured_59.png
+'NoneType' object has no attribute 'landmark'
+../data/img/bas/captured_image_4.png_elisee.png
+'NoneType' object has no attribute 'landmark'
+../data/img/bas/captured_15.png_elisee.png
+'NoneType' object has no attribute 'landmark'
+../data/img/bas/captured_76.png
+'NoneType' object has no attribute 'landmark'

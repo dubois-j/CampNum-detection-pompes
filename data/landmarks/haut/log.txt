@@ -1,0 +1,14 @@
+../data/img/haut/captured_85.png
+'NoneType' object has no attribute 'landmark'
+../data/img/haut/captured_image_3.png_elisee.png
+'NoneType' object has no attribute 'landmark'
+../data/img/haut/captured_78.png
+'NoneType' object has no attribute 'landmark'
+../data/img/haut/image_pompe14.png_marie.png
+'NoneType' object has no attribute 'landmark'
+../data/img/haut/captured_41.png
+'NoneType' object has no attribute 'landmark'
+../data/img/haut/captured_image_5.png_elisee.png
+'NoneType' object has no attribute 'landmark'
+../data/img/haut/captured_46.png
+'NoneType' object has no attribute 'landmark'

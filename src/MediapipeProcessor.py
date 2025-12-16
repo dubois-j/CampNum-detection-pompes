@@ -1,6 +1,8 @@
 import mediapipe as mp
-#import PompeCount
 import cv2
+import pickle
+import os 
+import numpy as np
 
 class MediaPipeProcessor:
     def __init__(self) -> None:
@@ -10,7 +12,7 @@ class MediaPipeProcessor:
         self.camera = cv2.VideoCapture(0)
 
     def get_pose_world_landmarks(self, image):
-        results = self.model.process(image)    
+        results = self.model.process(image) 
         return results.pose_world_landmarks
     
     def show_interface(self):
@@ -24,3 +26,57 @@ class MediaPipeProcessor:
             
         self.camera.release()
         cv2.destroyAllWindows()
+
+    
+    def format_landmarks(self, world_landmarks):
+        """
+        Transforms the output of `get_pose_world_landmarks()` for a given imagefrom LandmarkList object to 
+        a dictionnary containing the index of landmarks, and its corresponding coordinates 
+        """
+        landmarks = {
+            "index": [],
+            "X": [],
+            "Y": [],
+            "Z": []
+        }
+
+        for i, lm in enumerate(world_landmarks.landmark[:]):
+            landmarks["index"].append(i)
+            landmarks["X"].append(lm.x)
+            landmarks["Y"].append(lm.y)
+            landmarks["Z"].append(lm.z)
+
+        return landmarks
+    
+    def get_landmarks_from_folder(self, source_path, target_path):
+        """
+        
+        """
+        data = {
+            "filename": [],
+            "landmarks": []
+        }
+        for file in os.listdir(source_path):
+            filename = f"{source_path}/{file}"
+            try:
+                image = cv2.imread(filename)
+                world_landmarks = self.get_pose_world_landmarks(image)
+                landmarks = self.format_landmarks(world_landmarks)
+                data["filename"].append(filename)
+                data["landmarks"].append(landmarks)
+            except Exception as e:
+                with open(f"{target_path}/log.txt", "a") as f:
+                    f.write(f"{filename}\n")
+                    f.write(f"{e}\n")
+
+        with open(f'{target_path}/landmarks.pickle', 'wb') as handle:
+            pickle.dump(data, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            
+    def landmarks_to_array(self, landmarks):
+        res = np.zeros(shape=(33,3))
+        res[:,0] = landmarks["X"]
+        res[:,1] = landmarks["Y"]
+        res[:,2] = landmarks["Z"]
+        return res
+
+    
