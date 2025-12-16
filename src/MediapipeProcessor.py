@@ -17,11 +17,11 @@ class MediaPipeProcessor:
         cv2.setMouseCallback(self.nameWindow, self.mouse_click)
         self.windowWidth = 80
         #Start Button
-        self.startButtonLocations = ((10, 10), (40, 40))
+        self.startButtonLocations = ((10, 10), (10 + self.windowWidth, 40))
         #Pause Button
-        self.pauseButtonLocations = ((300, 10), (340, 40))
+        self.pauseButtonLocations = ((320 - self.windowWidth//2, 10), (320 + self.windowWidth//2, 40))
         #Restart Button
-        self.restartButtonLocations = ((590, 10), (630, 40))
+        self.restartButtonLocations = ((630 - self.windowWidth, 10), (630, 40))
 
         self.counterOn = False
         
@@ -84,6 +84,7 @@ class MediaPipeProcessor:
             _, image = self.camera.read()
             image = cv2.flip(image, 1)
             
+            #Compute things
             
             self.drawInterface(image)
             cv2.imshow(self.nameWindow, image)
